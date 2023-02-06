@@ -12,6 +12,7 @@ import com.tylerbartnick.datastructures.Stack;
 public class StackDriver {
     public static void main(String[] args) {
         Stack<Integer> stack = new Stack<Integer>();
+        stack.push(null);
 
         System.out.println("Current stack count: " + stack.count());
         System.out.println("Pushing 61...");

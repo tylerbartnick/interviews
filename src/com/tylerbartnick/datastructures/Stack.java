@@ -24,7 +24,8 @@ public class Stack<T> {
      * @param data The data to be added to the Stack.
      */
     public void push(T data) {
-        if (data == null) { return; }
+        // push onto head; allow nulls to be pushed onto stack since it's just
+        // the data and not the Node itself.
         stack.insert(new Node<T>(data), 0);
     }
 
