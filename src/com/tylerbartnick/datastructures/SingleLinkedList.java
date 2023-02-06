@@ -24,11 +24,15 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
 
     /**
      * Constructor with an initial head Node.
-     * @param head The Node to be used as the head of the structure.
+     * @param node The Node to be used as the head of the structure.
      */
-    public SingleLinkedList(Node<T> head) {
-        this.count = 1;
-        this.head = head;
+    public SingleLinkedList(Node<T> node) {
+        try {
+            // leverage the append functionality here to protect against errors
+            append(node);
+        } catch (IllegalArgumentException ex) {
+            throw ex;
+        }
     }
 
     /**

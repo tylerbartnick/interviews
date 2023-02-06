@@ -67,6 +67,11 @@ public class SingleLinkedListDriver {
         System.out.println(ll.getHead().getData());
         ll.insert(new Node<String>("DATA!!!"), 1);
 
+        System.out.println("Creating second linked list and inserting a Node immediately...");
+        SingleLinkedList<Integer> ll2 = new SingleLinkedList<>(new Node<Integer>(12));
+        System.out.println(ll2.getCount());
+        System.out.println("Second linked list created successfully!");
+
         try {
             ll.insert(null, 0);
         }
