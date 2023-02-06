@@ -1,10 +1,11 @@
 package com.tylerbartnick.datastructures;
 
+import java.lang.IllegalArgumentException;
+import java.lang.IndexOutOfBoundsException;
+import java.lang.NullPointerException;
+
 /**
- * Naive implementation of a singly-linked list. Null checks are needed in this
- * version as exceptions were not used in this initial iteration. Inserting
- * out-of-bounds will fail silently as well. In future versions, exceptions will
- * be thrown were applicable.
+ * Performance-oriented implementation of a singly-linked list.
  * 
  * @author Tyler Bartnick
  * @version 1.0.0
@@ -49,9 +50,13 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
     /**
      * Appends the specified Node to the end of the list. Requires full traversal.
      * @return The Node that was to be appended.
+     * @throws IllegalArgumentException
      */
-    public Node<T> append(Node<T> node) {
-        if (node == null) { return null; }
+    public Node<T> append(Node<T> node) throws IllegalArgumentException {
+        if (node == null) {
+            throw new IllegalArgumentException(new NullPointerException());
+        }
+
         eraseNodeRefs(node);
         Node<T> currPtr = head;
         if (currPtr == null) {
@@ -72,9 +77,17 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
     /**
      * Inserts the specified Node at the specified index.
      * @return The specified Node.
+     * @throws IllegalArgumentException
      */
-    public Node<T> insert(Node<T> node, int index) {
-        if (node == null || index < 0 || index > getCount()) { return null; }
+    public Node<T> insert(Node<T> node, int index) throws IllegalArgumentException {
+        if (node == null) {
+            throw new IllegalArgumentException(new NullPointerException());
+        }
+
+        if (index < 0 || index > getCount()) {
+            throw new IllegalArgumentException(new IndexOutOfBoundsException());
+        }
+
         eraseNodeRefs(node);
         if (index == 0) {
             // insert at head
@@ -84,7 +97,7 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
             return head;
         } else if (index == 1 || index == getCount() - 1) {
             // insert at tail, just call append() which will also increment count
-            // position 1 is a special case to account for
+            // position 1 is a special case to account for when list only has a head
             return append(node);
         } else {
             // insert in the middle somewhere
@@ -105,9 +118,13 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
 
     /**
      * Deletes the Node at the specified index, if exists.
+     * @throws IllegalArgumentException
      */
-    public void delete(int index) {
-        if (head == null || index < 0 || index >= getCount()) { return; }
+    public void delete(int index) throws IllegalArgumentException {
+        if (head == null || index < 0 || index >= getCount()) {
+            throw new IllegalArgumentException(new IndexOutOfBoundsException());
+        }
+
         if (index == 0) {
             // deletion occurs at beginning of list, advance head ptr and remove
             // all refs to original head.
@@ -146,9 +163,13 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
     /**
      * Retrieves and returns the Node at the specified index, if exists.
      * @return The Node at the specified index, if exists. Null if not found.
+     * @throws IllegalArgumentException
      */
-    public Node<T> get(int index) {
-        if (head == null || index < 0 || index > getCount()) { return null; }
+    public Node<T> get(int index) throws IllegalArgumentException {
+        if (head == null || index < 0 || index > getCount()) {
+            throw new IllegalArgumentException(new IndexOutOfBoundsException());
+        }
+
         int idx = 0;
         Node<T> currPtr = head;
         while (currPtr.getNext() != null && idx < index) {

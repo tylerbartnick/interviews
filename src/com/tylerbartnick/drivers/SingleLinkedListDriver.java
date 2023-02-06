@@ -46,7 +46,14 @@ public class SingleLinkedListDriver {
 
         ll.delete(0);
         ll.delete(2);
-        ll.delete(ll.getCount());
+        
+        try {
+            ll.delete(ll.getCount());
+        }
+        catch (IllegalArgumentException ex) {
+            ll.delete(ll.getCount() - 1);
+        }
+
         System.out.println(ll.getCount());
 
         System.out.println(ll.empty());
@@ -59,5 +66,12 @@ public class SingleLinkedListDriver {
 
         System.out.println(ll.getHead().getData());
         ll.insert(new Node<String>("DATA!!!"), 1);
+
+        try {
+            ll.insert(null, 0);
+        }
+        catch (IllegalArgumentException ex) {
+            throw ex;
+        }
     }
 }
