@@ -26,7 +26,7 @@ public class Stack<T> {
     public void push(T data) {
         // push onto head; allow nulls to be pushed onto stack since it's just
         // the data and not the Node itself.
-        stack.insert(new Node<T>(data), 0);
+        stack.insert(data, 0);
     }
 
     /**
@@ -36,7 +36,7 @@ public class Stack<T> {
     public T pop() {
         if (stack.getHead() == null) { return null; }
 
-        T temp = stack.getHead().getData();
+        T temp = stack.getHead();
         stack.delete(0);
         return temp;
     }
@@ -49,7 +49,7 @@ public class Stack<T> {
      */
     public T peek() {
         if (stack.getHead() == null) { return null; }
-        return stack.getHead().getData();
+        return stack.getHead();
     }
 
     /**

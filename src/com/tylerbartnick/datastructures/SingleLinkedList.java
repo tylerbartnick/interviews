@@ -24,23 +24,24 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
 
     /**
      * Constructor with an initial head Node.
-     * @param node The Node to be used as the head of the structure.
+     * @param data The data to be used as the head Node of the structure.
      */
-    public SingleLinkedList(Node<T> node) {
+    public SingleLinkedList(T data) {
         try {
             // leverage the append functionality here to protect against errors
-            append(node);
+            append(data);
         } catch (IllegalArgumentException ex) {
             throw ex;
         }
     }
 
     /**
-     * Gets the head Node.
-     * @return The head Node.
+     * Gets the data of the head Node.
+     * @return The data of the head Node.
      */
-    public Node<T> getHead() {
-        return this.head;
+    public T getHead() {
+        if (head == null) { return null; }
+        return head.getData();
     }
 
     /**
@@ -56,18 +57,18 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
      * @return The Node that was to be appended.
      * @throws IllegalArgumentException
      */
-    public Node<T> append(Node<T> node) throws IllegalArgumentException {
-        if (node == null) {
+    public T append(T data) throws IllegalArgumentException {
+        if (data == null) {
             throw new IllegalArgumentException(new NullPointerException());
         }
 
-        eraseNodeRefs(node);
+        Node<T> node = new Node<>(data);
         Node<T> currPtr = head;
         if (currPtr == null) {
             // we are appending to an empty list
             head = node;
             count++;
-            return head;
+            return data;
         }
         
         while (currPtr.getNext() != null) {
@@ -75,7 +76,7 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
         }
         currPtr.setNext(node);
         count++;
-        return node;
+        return data;
     }
 
     /**
@@ -83,8 +84,8 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
      * @return The specified Node.
      * @throws IllegalArgumentException
      */
-    public Node<T> insert(Node<T> node, int index) throws IllegalArgumentException {
-        if (node == null) {
+    public T insert(T data, int index) throws IllegalArgumentException {
+        if (data == null) {
             throw new IllegalArgumentException(new NullPointerException());
         }
 
@@ -92,17 +93,17 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
             throw new IllegalArgumentException(new IndexOutOfBoundsException());
         }
 
-        eraseNodeRefs(node);
+        Node<T> node = new Node<>(data);
         if (index == 0) {
             // insert at head
             node.setNext(head);
             head = node;
             count++;
-            return head;
+            return data;
         } else if (index == 1 || index == getCount() - 1) {
             // insert at tail, just call append() which will also increment count
             // position 1 is a special case to account for when list only has a head
-            return append(node);
+            return append(data);
         } else {
             // insert in the middle somewhere
             int idx = 0;
@@ -116,7 +117,7 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
             currPtrMinusOne.setNext(node);
             node.setNext(currPtr);
             count++;
-            return node;
+            return data;
         }
     }
 
@@ -169,7 +170,7 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
      * @return The Node at the specified index, if exists. Null if not found.
      * @throws IllegalArgumentException
      */
-    public Node<T> get(int index) throws IllegalArgumentException {
+    public T get(int index) throws IllegalArgumentException {
         if (head == null || index < 0 || index > getCount()) {
             throw new IllegalArgumentException(new IndexOutOfBoundsException());
         }
@@ -180,7 +181,7 @@ public class SingleLinkedList<T> implements ILinkedList<T> {
             currPtr = currPtr.getNext();
             idx++;
         }
-        return currPtr;
+        return currPtr.getData();
     }
 
     /**

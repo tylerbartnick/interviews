@@ -8,10 +8,10 @@ package com.tylerbartnick.datastructures;
  */
 public interface ILinkedList<T> {
     public int getCount();
-    public Node<T> append(Node<T> node);
-    public Node<T> insert(Node<T> node, int index);
+    public T append(T data);
+    public T insert(T data, int index);
     public void delete(int index);
-    public Node<T> get(int index);
+    public T get(int index);
     public boolean empty();
     public void clear();
 }
