@@ -117,6 +117,10 @@ public class DoubleLinkedList<T> implements ILinkedList<T> {
      * @throws IllegalArgumentException
      */
     public T insert(T data, int index) throws IllegalArgumentException {
+        if (data == null) {
+            throw new IllegalArgumentException("Argument `data` cannot be null.", new NullPointerException());
+        }
+
         if (index < 0 || index >= getCount()) {
             throw new IllegalArgumentException(new IndexOutOfBoundsException());
         }
